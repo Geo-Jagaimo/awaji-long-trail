@@ -12,9 +12,9 @@
 </svelte:head>
 
 <div class="flex flex-col items-center justify-center p-6">
-	<h1 class="mb-6 text-3xl font-bold">ブログ</h1>
+	<h1 class="mb-6 text-3xl font-bold">活動記録</h1>
 	<ul class="space-y-2">
-        {#each data.contents as content (content.id)}
+		{#each data.contents as content (content.id)}
 			<li>
 				<a href={`/${content.id}`} class="text-blue-600 hover:underline">
 					{content.title}

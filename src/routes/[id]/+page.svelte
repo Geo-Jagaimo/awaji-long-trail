@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>ブログ</title>
+	<title>活動記録</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
@@ -12,7 +12,6 @@
 	<h1>{data.title}</h1>
 	<img src={data.eyecatch?.url} alt="" />
 	<div>
-		<!-- svelte-ignore svelte/no-at-html-tags -->
 		{@html data.content}
 	</div>
 </div>

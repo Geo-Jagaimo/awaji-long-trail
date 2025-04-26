@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const data = await client.get({
-		endpoint: 'blogs',
+		endpoint: 'posts',
 		contentId: params.id
 	});
 
