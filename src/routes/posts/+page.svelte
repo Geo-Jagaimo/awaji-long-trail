@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageData } from '../posts/$types';
 	let { data } = $props<{ data: PageData }>();
 </script>
 
