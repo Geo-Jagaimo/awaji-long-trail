@@ -15,29 +15,28 @@
 	let isShowContactInMenu = $state(false);
 
 	$effect(() => {
-        const checkScreen = () => {
-            isShowContactInMenu = window.innerWidth < 640;
-        };
+		const checkScreen = () => {
+			isShowContactInMenu = window.innerWidth < 640;
+		};
 
-        checkScreen();
+		checkScreen();
 
-        window.addEventListener('resize', checkScreen);
+		window.addEventListener('resize', checkScreen);
 
-        return () => {
-            window.removeEventListener('resize', checkScreen);
-        };
-    });
+		return () => {
+			window.removeEventListener('resize', checkScreen);
+		};
+	});
 </script>
-
 
 <header class="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
 	<div class="mx-auto flex h-20 max-w-[1080px] items-center justify-between px-6">
 		<!-- タイトル -->
-		<div class="text-2xl font-bold text-black lg:pl-2.5">淡路島ロングトレイル構想</div>
+		<div class="text-2xl font-bold text-black">淡路島ロングトレイル構想</div>
 		<!-- 右側エリア -->
-		<div class="flex items-center ml-auto space-x-4">
+		<div class="ml-auto flex items-center space-x-4">
 			<!-- lg以上：ナビリンク＋お問い合わせ -->
-			<nav class="hidden lg:flex items-center space-x-6">
+			<nav class="hidden items-center space-x-6 lg:flex">
 				{#each navObject as { name, href, isExternal } (href)}
 					<a
 						{href}
@@ -64,17 +63,33 @@
 					href="https://tikusatakehara.com/contact"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="hidden sm:inline-flex rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white hover:bg-orange-600"
+					class="hidden rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white hover:bg-orange-600 sm:inline-flex"
 				>
 					お問い合わせ
 				</a>
 				<!-- ハンバーガーメニュー -->
 				<button onclick={() => (isMenuOpen = !isMenuOpen)}>
-					<svg class="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+					<svg
+						class="h-6 w-6 text-gray-700"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
 						{#if isMenuOpen}
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M6 18L18 6M6 6l12 12"
+							/>
 						{:else}
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M4 6h16M4 12h16M4 18h16"
+							/>
 						{/if}
 					</svg>
 				</button>
@@ -83,7 +98,7 @@
 	</div>
 	<!-- ハンバーガーメニュー（lg未満で表示） -->
 	{#if isMenuOpen}
-		<div class="lg:hidden bg-white shadow-md">
+		<div class="bg-white shadow-md lg:hidden">
 			<nav class="flex flex-col items-center space-y-4 py-4">
 				{#each navObject as { name, href, isExternal } (href)}
 					<a
