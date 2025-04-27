@@ -1,7 +1,4 @@
-<script lang="ts">
-	import type { PageData } from './$types';
-	let { data } = $props<{ data: PageData }>();
-</script>
+<script lang="ts"></script>
 
 <svelte:head>
 	<title>Awaji Long Trail</title>
@@ -11,6 +8,8 @@
 	/>
 </svelte:head>
 
-<div class="flex flex-col items-center justify-center p-6 bg-gray-100">
-	<div class="lg:max-w-[1080px] mx-auto mb-6 mt-32 text-3xl font-bold">まだ作っている途中だよ＝</div>
+<div class="flex flex-col items-center justify-center bg-gray-100 p-6">
+	<div class="mx-auto mt-32 mb-6 text-3xl font-bold lg:max-w-[1080px]">
+		まだ作っている途中だよ〜！
+	</div>
 </div>

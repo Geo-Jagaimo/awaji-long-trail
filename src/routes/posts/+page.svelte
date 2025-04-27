@@ -11,8 +11,8 @@
 	/>
 </svelte:head>
 
-<div class="flex flex-col items-center justify-center p-6 bg-gray-100">
-	<div class="lg:max-w-[1080px] mx-auto mb-6 mt-32 text-3xl font-bold">活動記録</div>
+<div class="flex flex-col items-center justify-center bg-gray-100 p-6">
+	<div class="mx-auto mt-32 mb-6 text-3xl font-bold lg:max-w-[1080px]">活動記録</div>
 	<ul class="space-y-2">
 		{#each data.contents as content (content.id)}
 			<li>
