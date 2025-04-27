@@ -31,7 +31,7 @@
 
 
 <header class="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
-	<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+	<div class="mx-auto flex h-20 max-w-[1080px] items-center justify-between px-6">
 		<!-- タイトル -->
 		<div class="text-2xl font-bold text-black lg:pl-2.5">淡路島ロングトレイル構想</div>
 		<!-- 右側エリア -->
