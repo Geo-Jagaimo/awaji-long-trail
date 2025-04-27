@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from "svelte";
-
 	const navObject: {
 		name: string;
 		href: string;
@@ -13,19 +11,22 @@
 		{ name: 'バンカランカ', href: 'https://bankalanka.com/project/longtrail', isExternal: true }
 	];
 
-	onMount(() => {
-		const checkScreen = () => {
-			isShowContactInMenu = window.innerWidth < 640; // sm未満ならtrue
-		};
+	let isMenuOpen = $state(false);
+	let isShowContactInMenu = $state(false);
 
-		checkScreen();
+	$effect(() => {
+        const checkScreen = () => {
+            isShowContactInMenu = window.innerWidth < 640;
+        };
 
-		window.addEventListener('resize', checkScreen);
-		return () => window.removeEventListener('resize', checkScreen);
-	});
+        checkScreen();
 
-	let isMenuOpen = false;
-	let isShowContactInMenu = false;
+        window.addEventListener('resize', checkScreen);
+
+        return () => {
+            window.removeEventListener('resize', checkScreen);
+        };
+    });
 </script>
 
 
@@ -64,7 +65,7 @@
 					お問い合わせ
 				</a>
 				<!-- ハンバーガーメニュー -->
-				<button on:click={() => (isMenuOpen = !isMenuOpen)}>
+				<button onclick={() => (isMenuOpen = !isMenuOpen)}>
 					<svg class="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 						{#if isMenuOpen}
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
