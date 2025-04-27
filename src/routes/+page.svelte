@@ -4,7 +4,7 @@
 	<title>Awaji Long Trail</title>
 	<meta
 		name="description"
-		content="Awaji Long Trail is a scenic hiking route that showcases the natural beauty of Awaji Island."
+		content="淡路島ロングトレイル構想は、木炭の産地だった竹原集落に残る山林道をトレイルコースとして整備し、地域の魅力を伝える取り組みです。"
 	/>
 </svelte:head>
 

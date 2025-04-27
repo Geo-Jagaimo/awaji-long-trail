@@ -69,11 +69,11 @@
     />
   </svelte:head>
   
-  <div class="flex w-full mt-20" style="height: calc(100vh - 5rem);">
-    <div class='ml-auto h-full w-full px-[12px] py-[12px]'>
+  <div class="flex w-full" style="height: calc(100vh - 5rem);">
+    <div class='ml-auto h-full w-full px-2 py-2 lg:px-3 lg:py-3'>
       <MapLibre
         bind:map
-        class='h-full min-h-[300px] rounded-2xl'
+        class='h-full min-h-[300px] rounded-xl'
         style='https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
         zoom={13}
         minZoom={3}
