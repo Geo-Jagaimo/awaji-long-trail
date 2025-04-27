@@ -8,7 +8,7 @@
 	/>
 </svelte:head>
 
-<div class="flex flex-col items-center justify-center bg-gray-100 p-6">
+<div class="flex flex-col items-center justify-center p-6">
 	<div class="mx-auto text-3xl font-bold lg:max-w-[1080px]">
 		まだ作っている途中だよ〜！
 	</div>

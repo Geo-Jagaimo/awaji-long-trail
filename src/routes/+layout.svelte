@@ -7,6 +7,6 @@
 
 <Header />
 
-<main class="mt-32">
+<main>
 	{@render children()}
 </main>

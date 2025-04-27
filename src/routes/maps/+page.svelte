@@ -70,7 +70,7 @@
   </svelte:head>
   
   <div class='flex w-full'>
-    <div class='ml-auto w-full bg-[#f8f8f8] px-[12px] py-[12px] h-[calc(100vh-8rem)]'>
+    <div class='ml-auto w-full px-[12px] py-[12px] h-[calc(100vh-8rem)]'>
       <MapLibre
         bind:map
         class='h-[100%] min-h-[300px] rounded-2xl'
