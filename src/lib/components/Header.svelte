@@ -59,7 +59,9 @@
 			<div class="flex items-center space-x-6 lg:hidden">
 				<!-- お問い合わせボタン（sm以上のみボタン表示） -->
 				<a
-					href="/contact"
+					href="https://tikusatakehara.com/contact"
+					target="_blank"
+					rel="noopener noreferrer"
 					class="hidden sm:inline-flex rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white hover:bg-orange-600"
 				>
 					お問い合わせ
@@ -94,7 +96,9 @@
 				{#if isShowContactInMenu}
 					<!-- sm未満のときはお問い合わせリンクを追加 -->
 					<a
-						href="/contact"
+						href="https://tikusatakehara.com/contact"
+						target="_blank"
+						rel="noopener noreferrer"
 						class="text-base font-medium text-gray-700 hover:text-orange-500"
 					>
 						お問い合わせ
