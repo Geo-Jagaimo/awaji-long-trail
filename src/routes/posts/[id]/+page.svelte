@@ -8,7 +8,7 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<div class="flex flex-col items-center justify-center">
+<div class="flex flex-col mt-32 items-center justify-center">
 	<h1>{data.title}</h1>
 	<img src={data.eyecatch?.url} alt="" />
 	<div>
