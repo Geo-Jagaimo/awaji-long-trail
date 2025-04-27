@@ -9,10 +9,9 @@
 </svelte:head>
 
 <div class="relative w-full overflow-hidden">
-	<!-- 背景画像 -->
+	<!-- image -->
 	<img src="/image_top.png" alt="Top Page" class="h-[600px] w-full object-cover" />
-
-	<!-- テキストブロック -->
+	<!-- contents -->
 	<div class="absolute top-0 left-0 flex h-[600px] w-full items-center justify-center">
 		<div class="flex w-full max-w-[1080px] flex-col px-6">
 			<div
