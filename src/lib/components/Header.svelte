@@ -106,6 +106,7 @@
 						class="text-base font-medium text-gray-700 hover:text-orange-500"
 						target={isExternal ? '_blank' : undefined}
 						rel={isExternal ? 'noopener noreferrer' : undefined}
+						onclick={() => (isMenuOpen = false)}
 					>
 						{name}
 					</a>
@@ -117,6 +118,7 @@
 						target="_blank"
 						rel="noopener noreferrer"
 						class="text-base font-medium text-gray-700 hover:text-orange-500"
+						onclick={() => (isMenuOpen = false)}
 					>
 						お問い合わせ
 					</a>
