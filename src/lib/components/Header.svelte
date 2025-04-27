@@ -49,7 +49,9 @@
 					</a>
 				{/each}
 				<a
-					href="/contact"
+					href="https://tikusatakehara.com/contact"
+					target="_blank"
+					rel="noopener noreferrer"
 					class="rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white hover:bg-orange-600"
 				>
 					お問い合わせ
