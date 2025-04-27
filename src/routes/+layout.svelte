@@ -40,4 +40,6 @@
 	</div>
 </header>
 
-{@render children()}
+<main class="mt-32 bg-[#fbf9f1]">
+	{@render children()}
+</main>

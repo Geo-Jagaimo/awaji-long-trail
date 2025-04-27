@@ -69,11 +69,11 @@
     />
   </svelte:head>
   
-  <div class='flex h-screen w-full'>
-    <div class='ml-auto w-full bg-[#f8f8f8] px-[12px] py-[12px] mt-32 h-[calc(100vh-8rem)]'>
+  <div class='flex w-full'>
+    <div class='ml-auto w-full bg-[#f8f8f8] px-[12px] py-[12px] h-[calc(100vh-8rem)]'>
       <MapLibre
         bind:map
-        class='h-[100%] min-h-[300px] rounded-2xl border-8 border-[#f8f8f8]'
+        class='h-[100%] min-h-[300px] rounded-2xl'
         style='https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
         zoom={13}
         minZoom={3}
