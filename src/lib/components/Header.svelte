@@ -99,31 +99,33 @@
 	<!-- ハンバーガーメニュー（lg未満で表示） -->
 	{#if isMenuOpen}
 		<div class="bg-white shadow-md lg:hidden">
-			<nav class="flex flex-col items-center space-y-4 py-4">
-				{#each navObject as { name, href, isExternal } (href)}
-					<a
-						{href}
-						class="text-base font-medium text-gray-700 hover:text-orange-500"
-						target={isExternal ? '_blank' : undefined}
-						rel={isExternal ? 'noopener noreferrer' : undefined}
-						onclick={() => (isMenuOpen = false)}
-					>
-						{name}
-					</a>
-				{/each}
-				{#if isShowContactInMenu}
-					<!-- sm未満のときはお問い合わせリンクを追加 -->
-					<a
-						href="https://tikusatakehara.com/contact"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="text-base font-medium text-gray-700 hover:text-orange-500"
-						onclick={() => (isMenuOpen = false)}
-					>
-						お問い合わせ
-					</a>
-				{/if}
-			</nav>
+			<div class="flex flex-col items-center pt-4 pb-12">
+				<nav class="flex flex-col items-center space-y-4">
+					{#each navObject as { name, href, isExternal } (href)}
+						<a
+							{href}
+							class="text-base font-medium text-gray-700 hover:text-orange-500"
+							target={isExternal ? '_blank' : undefined}
+							rel={isExternal ? 'noopener noreferrer' : undefined}
+							onclick={() => (isMenuOpen = false)}
+						>
+							{name}
+						</a>
+					{/each}
+					{#if isShowContactInMenu}
+						<!-- sm未満のときはお問い合わせリンクを追加 -->
+						<a
+							href="https://tikusatakehara.com/contact"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-base font-medium text-gray-700 hover:text-orange-500"
+							onclick={() => (isMenuOpen = false)}
+						>
+							お問い合わせ
+						</a>
+					{/if}
+				</nav>
+			</div>
 		</div>
 	{/if}
 </header>
