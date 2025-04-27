@@ -4,7 +4,6 @@
 		href: string;
 		isExternal?: boolean;
 	}[] = [
-		{ name: 'Top', href: '/' },
 		{ name: '活動記録', href: '/posts' },
 		{ name: 'コースマップ', href: '/maps' },
 		{ name: '竹原集落', href: 'https://tikusatakehara.com', isExternal: true },
@@ -32,7 +31,7 @@
 <header class="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
 	<div class="mx-auto flex h-20 max-w-[1080px] items-center justify-between px-6">
 		<!-- タイトル -->
-		<div class="text-2xl font-bold text-black">淡路島ロングトレイル構想</div>
+		<a href="/" class="text-2xl font-bold text-black">淡路島ロングトレイル構想</a>
 		<!-- 右側エリア -->
 		<div class="ml-auto flex items-center space-x-4">
 			<!-- lg以上：ナビリンク＋お問い合わせ -->
