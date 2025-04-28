@@ -98,7 +98,7 @@
 	<!-- ハンバーガーメニュー（lg未満で表示） -->
 	{#if isMenuOpen}
 		<div class="bg-white shadow-md lg:hidden">
-			<div class="flex flex-col items-center pt-4 pb-12">
+			<div class="flex flex-col items-center pb-6">
 				<nav class="flex flex-col items-center space-y-4">
 					{#each navObject as { name, href, isExternal } (href)}
 						<a
