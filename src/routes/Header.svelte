@@ -1,13 +1,15 @@
 <script lang="ts">
+	import OrangeButton from '$lib/components/OrangeButton.svelte';
+	import HeaderLink from './HeaderLink.svelte';
+
 	const navObject: {
 		name: string;
 		href: string;
-		isExternal?: boolean;
 	}[] = [
 		{ name: '活動記録', href: '/posts' },
 		{ name: 'コースマップ', href: '/maps' },
-		{ name: '竹原集落', href: 'https://tikusatakehara.com', isExternal: true },
-		{ name: 'バンカランカ', href: 'https://bankalanka.com/project/longtrail', isExternal: true }
+		{ name: '竹原集落', href: 'https://tikusatakehara.com' },
+		{ name: 'バンカランカ', href: 'https://bankalanka.com/project/longtrail' }
 	];
 
 	let isMenuOpen = $state(false);
@@ -36,24 +38,14 @@
 		<div class="ml-auto flex items-center space-x-4">
 			<!-- lg以上：ナビリンク＋お問い合わせ -->
 			<nav class="hidden items-center space-x-6 lg:flex">
-				{#each navObject as { name, href, isExternal } (href)}
-					<a
-						{href}
-						class="text-sm font-medium text-gray-700 hover:text-orange-500"
-						target={isExternal ? '_blank' : undefined}
-						rel={isExternal ? 'noopener noreferrer' : undefined}
-					>
+				{#each navObject as { name, href } (href)}
+					<HeaderLink
 						{name}
-					</a>
+						{href}
+						className="text-sm font-medium text-gray-700 hover:text-orange-500"
+					/>
 				{/each}
-				<a
-					href="https://tikusatakehara.com/contact"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white hover:bg-orange-600"
-				>
-					お問い合わせ
-				</a>
+				<OrangeButton name="お問い合わせ" href="https://tikusatakehara.com/contact" />
 			</nav>
 			<!-- sm以上lg未満：お問い合わせボタン＋ハンバーガーメニュー -->
 			<div class="flex items-center space-x-6 lg:hidden">
@@ -100,28 +92,22 @@
 		<div class="bg-white shadow-md lg:hidden">
 			<div class="flex flex-col items-center pb-6">
 				<nav class="flex flex-col items-center space-y-4">
-					{#each navObject as { name, href, isExternal } (href)}
-						<a
-							{href}
-							class="text-base font-medium text-gray-700 hover:text-orange-500"
-							target={isExternal ? '_blank' : undefined}
-							rel={isExternal ? 'noopener noreferrer' : undefined}
-							onclick={() => (isMenuOpen = false)}
-						>
+					{#each navObject as { name, href } (href)}
+						<HeaderLink
 							{name}
-						</a>
+							{href}
+							className="text-sm font-medium text-gray-700 hover:text-orange-500"
+							onClick={() => (isMenuOpen = false)}
+						/>
 					{/each}
 					{#if isShowContactInMenu}
 						<!-- sm未満のときはお問い合わせリンクを追加 -->
-						<a
+						<HeaderLink
+							name="お問い合わせ"
 							href="https://tikusatakehara.com/contact"
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-base font-medium text-gray-700 hover:text-orange-500"
-							onclick={() => (isMenuOpen = false)}
-						>
-							お問い合わせ
-						</a>
+							className="text-base font-medium text-gray-700 hover:text-orange-500"
+							onClick={() => (isMenuOpen = false)}
+						/>
 					{/if}
 				</nav>
 			</div>
