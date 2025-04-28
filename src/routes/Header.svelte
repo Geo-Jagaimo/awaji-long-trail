@@ -1,5 +1,5 @@
 <script lang="ts">
-	import OrangeButton from '$lib/components/OrangeButton.svelte';
+	import SquareButton from '$lib/components/SquareButton.svelte';
 	import HeaderLink from './HeaderLink.svelte';
 
 	const navObject: {
@@ -45,7 +45,7 @@
 						className="text-sm font-medium text-gray-700 hover:text-orange-500"
 					/>
 				{/each}
-				<OrangeButton name="お問い合わせ" href="https://tikusatakehara.com/contact" />
+				<SquareButton name="お問い合わせ" href="https://tikusatakehara.com/contact" />
 			</nav>
 			<!-- sm以上lg未満：お問い合わせボタン＋ハンバーガーメニュー -->
 			<div class="flex items-center space-x-6 lg:hidden">

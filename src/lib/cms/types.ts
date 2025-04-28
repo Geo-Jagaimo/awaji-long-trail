@@ -15,6 +15,17 @@ export type Blog = {
 	selectField: string;
 	eyecatch: MicrocmsImage;
 };
+
+export type News = {
+	id: string;
+	createdAt: string;
+	updatedAt: string;
+	publishedAt: string;
+	revisedAt: string;
+	title: string;
+	content: string;
+};
+
 export type BlogResponse = {
 	totalCount: number;
 	offset: number;

@@ -1,4 +1,6 @@
-<script lang="ts"></script>
+<script lang="ts">
+	import MoreButton from '$lib/components/MoreButton.svelte';
+</script>
 
 <svelte:head>
 	<title>Awaji Long Trail</title>
@@ -31,6 +33,17 @@
 				/>
 				淡路島全土を歩いて繋ぐ「歩くアワイチ」を目指して、ゆっくりと活動を進めています。
 			</div>
+		</div>
+	</div>
+	<div class="mx-auto w-full max-w-[1080px] px-6 py-6">
+		<div
+			class="text-xl leading-tight font-bold text-amber-800 md:text-4xl lg:text-3xl"
+			style="text-spacing-trim: trim-start;"
+		>
+			お知らせ
+		</div>
+		<div class="mt-4 mx-auto flex flex-col items-center gap-4">
+			<MoreButton href="/news" />
 		</div>
 	</div>
 </div>
