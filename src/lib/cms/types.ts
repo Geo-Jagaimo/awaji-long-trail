@@ -20,12 +20,12 @@ export type Post = {
 		id: string;
 		name: string;
 	}[];
-	member?: string;
+	member: string[];
 	content: string;
-	eyecatch?: MicrocmsImage;
+	eyecatch: MicrocmsImage;
 	createdAt: string;
 	publishedAt: string;
-	revisedAt?: string;
+	revisedAt: string;
 };
 
 export type News = {
