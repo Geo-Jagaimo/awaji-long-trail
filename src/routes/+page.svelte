@@ -50,7 +50,7 @@
 		>
 			お知らせ
 		</div>
-		<div class="pl:px-4 mt-2 overflow-y-auto px-2">
+		<div class="pl:px-4 mt-2 overflow-y-auto px-0.5">
 			{#if data.newsList.length === 0}
 				<p class="text-base">お知らせはまだありません。</p>
 			{:else}
