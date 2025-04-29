@@ -42,7 +42,7 @@
 	</div>
 </div>
 <div class="relative w-full overflow-hidden bg-orange-100">
-	<div class="mx-auto w-full max-w-[1080px] px-6 py-6">
+	<div class="mx-auto w-full max-w-[1080px] px-6 py-6 lg:py-12">
 		<div
 			class="text-xl leading-tight font-bold text-amber-800 md:text-4xl lg:text-3xl"
 			style="text-spacing-trim: trim-start;"
@@ -66,7 +66,7 @@
 				</ul>
 			{/if}
 		</div>
-		<div class="mx-auto mt-4 flex flex-col items-center gap-4">
+		<div class="mx-auto mt-8 flex flex-col items-center gap-4">
 			<MoreButton href="/news" />
 		</div>
 	</div>
