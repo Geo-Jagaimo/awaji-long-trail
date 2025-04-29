@@ -4,16 +4,28 @@ type MicrocmsImage = {
 	width: number;
 };
 
-export type Post = {
+export type Category = {
 	id: string;
 	createdAt: string;
 	updatedAt: string;
 	publishedAt: string;
 	revisedAt: string;
+	name: string;
+};
+
+export type Post = {
+	id: string;
 	title: string;
+	category: {
+		id: string;
+		name: string;
+	}[];
+	member?: string;
 	content: string;
-	selectField: string;
-	eyecatch: MicrocmsImage;
+	eyecatch?: MicrocmsImage;
+	createdAt: string;
+	publishedAt: string;
+	revisedAt?: string;
 };
 
 export type News = {

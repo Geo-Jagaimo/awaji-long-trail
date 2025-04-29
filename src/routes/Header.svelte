@@ -6,6 +6,7 @@
 		name: string;
 		href: string;
 	}[] = [
+		{ name: 'Top', href: '/' },
 		{ name: '活動記録', href: '/posts' },
 		{ name: 'コースマップ', href: '/maps' },
 		{ name: '竹原集落', href: 'https://tikusatakehara.com' },

@@ -1,6 +1,5 @@
 import { createClient, type MicroCMSQueries } from 'microcms-js-sdk';
 import type { Post, Response, News } from './types';
-
 import { MICROCMS_SERVICE_DOMAIN, MICROCMS_API_KEY } from '$env/static/private';
 
 export const client = createClient({
@@ -8,7 +7,7 @@ export const client = createClient({
 	apiKey: MICROCMS_API_KEY
 });
 
-const getList = async (queries?: MicroCMSQueries) => {
+const getList = async (queries?: MicroCMSQueries): Promise<Response> => {
 	return await client.get<Response>({ endpoint: 'posts', queries });
 };
 

@@ -1,18 +1,16 @@
-import DOMPurify from 'universal-dompurify';
-import { client } from '$lib/cms/client';
 import type { PageServerLoad } from './$types';
+import { error } from '@sveltejs/kit';
+import { getDetail } from '$lib/cms/client';
+import type { Post } from '$lib/cms/types';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const data = await client.get({
-		endpoint: 'posts',
-		contentId: params.id
-	});
+	const id = params.id;
 
-	const sanitizedContent = DOMPurify.sanitize(data.content);
-	return {
-		...data,
-		content: sanitizedContent
-	};
+	try {
+		const post: Post = await getDetail(id);
+		return { post };
+	} catch (err) {
+		console.error(err);
+		throw error(404, 'Post not found');
+	}
 };
-
-export const prerender = true;
