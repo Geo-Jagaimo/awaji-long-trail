@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../../app.css';
+	import SanitizeHtml from '$lib/components/SanitizeHtml.svelte'; // Import SanitizeHtml component
 
 	import type { PageData } from './$types';
 
@@ -25,7 +26,9 @@
 							<p class="text-sm text-black">
 								<small>{new Date(news.publishedAt).toLocaleDateString()}</small>
 							</p>
-							<div class="news-content mb-2 px-2 text-base">{@html news.content}</div>
+							<div class="news-content mb-2 px-2 text-base">
+								<SanitizeHtml html={news.content} />
+							</div>
 						</li>
 					{/each}
 				</ul>

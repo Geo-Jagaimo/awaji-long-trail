@@ -3,6 +3,7 @@
 
 	import type { PageData } from './$types';
 	import MoreButton from '$lib/components/MoreButton.svelte';
+	import SanitizeHtml from '$lib/components/SanitizeHtml.svelte'; // Import SanitizeHtml component
 
 	let { data } = $props<{ data: PageData }>();
 </script>
@@ -60,7 +61,9 @@
 							<p class="text-sm text-black">
 								<small>{new Date(news.publishedAt).toLocaleDateString()}</small>
 							</p>
-							<div class="news-content mb-2 px-2 text-base">{@html news.content}</div>
+							<div class="news-content mb-2 px-2 text-base">
+								<SanitizeHtml html={news.content} />
+							</div>
 						</li>
 					{/each}
 				</ul>
