@@ -6,7 +6,6 @@ body {
 	background-color: #fbf9f1;
 }
 
-
 .news-content a {
 	@apply underline hover:text-orange-600;
 }

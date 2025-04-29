@@ -44,27 +44,29 @@
 <div class="relative w-full overflow-hidden bg-orange-100">
 	<div class="mx-auto w-full max-w-[1080px] px-6 py-6">
 		<div
-			class="text-xl leading-tight font-bold text-amber-800 md:text-4xl lg:text-3xl"
+			class="text-2xl leading-tight font-bold text-amber-800 md:text-4xl lg:text-5xl"
 			style="text-spacing-trim: trim-start;"
 		>
 			お知らせ
 		</div>
-		<div class="mt-2 overflow-y-auto">
+		<div class="pl:px-4 mt-2 overflow-y-auto px-2">
 			{#if data.newsList.length === 0}
-			<p>お知らせはまだありません。</p>
+				<p class="text-base">お知らせはまだありません。</p>
 			{:else}
-			<ul>
-				{#each data.newsList.slice(0, 3) as news}
-				<li>
-					<h2>{news.title}</h2>
-					<p><small>{new Date(news.publishedAt).toLocaleDateString()}</small></p>
-					<div class="news-content px-2">{@html news.content}</div>
-				</li>
-				{/each}
-			</ul>
+				<ul class="space-y-4">
+					{#each data.newsList as news (news.id)}
+						<li>
+							<h2 class="text-xl font-semibold">{news.title}</h2>
+							<p class="text-sm text-black">
+								<small>{new Date(news.publishedAt).toLocaleDateString()}</small>
+							</p>
+							<div class="news-content mb-2 px-2 text-base">{@html news.content}</div>
+						</li>
+					{/each}
+				</ul>
 			{/if}
 		</div>
-		<div class="mt-4 mx-auto flex flex-col items-center gap-4">
+		<div class="mx-auto mt-4 flex flex-col items-center gap-4">
 			<MoreButton href="/news" />
 		</div>
 	</div>
