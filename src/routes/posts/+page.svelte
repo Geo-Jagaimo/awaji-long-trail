@@ -18,7 +18,7 @@
 			活動記録
 		</div>
 	</div>
-	<div class="grid w-full max-w-[1080px] grid-cols-1 gap-6 px-6 lg:grid-cols-3">
+	<div class="grid w-full max-w-[1080px] grid-cols-1 gap-6 px-6 mt-4 lg:grid-cols-3">
 		{#each data.contents as content (content.id)}
 			<a
 				href={`/posts/${content.id}`}

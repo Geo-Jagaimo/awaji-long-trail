@@ -4,7 +4,7 @@ type MicrocmsImage = {
 	width: number;
 };
 
-export type Blog = {
+export type Post = {
 	id: string;
 	createdAt: string;
 	updatedAt: string;
@@ -26,9 +26,9 @@ export type News = {
 	content: string;
 };
 
-export type BlogResponse = {
+export type Response = {
 	totalCount: number;
 	offset: number;
 	limit: number;
-	contents: Blog[];
+	contents: Post[];
 };
