@@ -2,12 +2,10 @@
 	import DOMPurify from 'dompurify';
 
 	let { html }: { html: string } = $props();
-	let sanitizedHtml: string = '';
+	let sanitizedHtml: string = $state('');
 
 	$effect(() => {
-		sanitizedHtml = DOMPurify.sanitize(html, {
-			USE_PROFILES: { html: true }
-		});
+		sanitizedHtml = DOMPurify.sanitize(html);
 	});
 </script>
 
