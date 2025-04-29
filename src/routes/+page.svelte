@@ -1,5 +1,10 @@
 <script lang="ts">
+	import '../app.css';
+
+	import type { PageData } from './$types';
 	import MoreButton from '$lib/components/MoreButton.svelte';
+
+	let { data } = $props<{ data: PageData }>();
 </script>
 
 <svelte:head>
@@ -35,12 +40,29 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="relative w-full overflow-hidden bg-orange-100">
 	<div class="mx-auto w-full max-w-[1080px] px-6 py-6">
 		<div
 			class="text-xl leading-tight font-bold text-amber-800 md:text-4xl lg:text-3xl"
 			style="text-spacing-trim: trim-start;"
 		>
 			お知らせ
+		</div>
+		<div class="mt-2 overflow-y-auto">
+			{#if data.newsList.length === 0}
+			<p>お知らせはまだありません。</p>
+			{:else}
+			<ul>
+				{#each data.newsList.slice(0, 3) as news}
+				<li>
+					<h2>{news.title}</h2>
+					<p><small>{new Date(news.publishedAt).toLocaleDateString()}</small></p>
+					<div class="news-content px-2">{@html news.content}</div>
+				</li>
+				{/each}
+			</ul>
+			{/if}
 		</div>
 		<div class="mt-4 mx-auto flex flex-col items-center gap-4">
 			<MoreButton href="/news" />
