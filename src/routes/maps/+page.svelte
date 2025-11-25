@@ -1,16 +1,25 @@
 <script lang="ts">
 	import maplibregl from 'maplibre-gl';
+	import { onMount } from 'svelte';
 
 	import {
 		FullScreenControl,
 		GeolocateControl,
+		GeoJSONSource,
 		GlobeControl,
+		LineLayer,
 		MapLibre,
 		NavigationControl,
 		ScaleControl
 	} from 'svelte-maplibre-gl';
 
 	let map: maplibregl.Map | undefined = $state.raw();
+	let trailData: any = $state(null);
+
+	onMount(async () => {
+		const response = await fetch('/geojson/ita.geojson');
+		trailData = await response.json();
+	});
 </script>
 
 <svelte:head>
@@ -36,6 +45,23 @@
 			<NavigationControl />
 			<ScaleControl />
 			<GlobeControl />
+
+			{#if trailData}
+				<GeoJSONSource id="trail-source" data={trailData}>
+					<LineLayer
+						id="trail-line"
+						layout={{
+							'line-join': 'round',
+							'line-cap': 'round'
+						}}
+						paint={{
+							'line-color': '#ff6b35',
+							'line-width': 3,
+							'line-opacity': 0.8
+						}}
+					/>
+				</GeoJSONSource>
+			{/if}
 		</MapLibre>
 	</div>
 </div>
