@@ -7,6 +7,7 @@
 		GeolocateControl,
 		GeoJSONSource,
 		GlobeControl,
+		HillshadeLayer,
 		LineLayer,
 		MapLibre,
 		NavigationControl,
@@ -47,15 +48,22 @@
 			<NavigationControl />
 			<ScaleControl />
 			<GlobeControl />
-			<TerrainControl source="mapterhorn-dem" position="top-right" />
-
 			<RasterDEMTileSource
-				id="mapterhorn-dem"
 				tiles={['https://tiles.mapterhorn.com/{z}/{x}/{y}.webp']}
 				encoding="terrarium"
 				tileSize={512}
 				maxzoom={12}
-			/>
+				attribution="<a href='https://mapterhorn.com/attribution/' target='_blank'>Mapterhorn</a>"
+			>
+				<TerrainControl position="top-right" />
+				<HillshadeLayer
+					paint={{
+						'hillshade-exaggeration': 0.5,
+						'hillshade-illumination-anchor': 'map',
+						'hillshade-shadow-color': '#3080b0'
+					}}
+				/>
+			</RasterDEMTileSource>
 
 			{#if trailData}
 				<GeoJSONSource id="trail-source" data={trailData}>
