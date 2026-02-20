@@ -10,7 +10,10 @@
 		LineLayer,
 		MapLibre,
 		NavigationControl,
-		ScaleControl
+		RasterDEMTileSource,
+		ScaleControl,
+		Terrain,
+		TerrainControl
 	} from 'svelte-maplibre-gl';
 
 	let map: maplibregl.Map | undefined = $state.raw();
@@ -45,6 +48,17 @@
 			<NavigationControl />
 			<ScaleControl />
 			<GlobeControl />
+			<TerrainControl source="mapterhorn-dem" position="top-right" />
+
+			<RasterDEMTileSource
+				id="mapterhorn-dem"
+				tiles={['https://tiles.mapterhorn.com/{z}/{x}/{y}.webp']}
+				encoding="terrarium"
+				tileSize={512}
+				maxzoom={12}
+			>
+				<Terrain exaggeration={1.2} />
+			</RasterDEMTileSource>
 
 			{#if trailData}
 				<GeoJSONSource id="trail-source" data={trailData}>
