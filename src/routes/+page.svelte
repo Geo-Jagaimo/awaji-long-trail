@@ -1,6 +1,4 @@
 <script lang="ts">
-	import '../app.css';
-
 	import type { PageData } from './$types';
 	import MoreButton from '$lib/components/MoreButton.svelte';
 	import SanitizeHtml from '$lib/components/SanitizeHtml.svelte'; // Import SanitizeHtml component

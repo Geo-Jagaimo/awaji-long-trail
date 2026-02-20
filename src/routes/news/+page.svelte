@@ -1,6 +1,5 @@
 <script lang="ts">
-	import '../../app.css';
-	import SanitizeHtml from '$lib/components/SanitizeHtml.svelte'; // Import SanitizeHtml component
+	import SanitizeHtml from '$lib/components/SanitizeHtml.svelte';
 
 	import type { PageData } from './$types';
 
