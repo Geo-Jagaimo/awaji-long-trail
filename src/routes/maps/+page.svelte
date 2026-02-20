@@ -12,12 +12,11 @@
 		NavigationControl,
 		RasterDEMTileSource,
 		ScaleControl,
-		Terrain,
 		TerrainControl
 	} from 'svelte-maplibre-gl';
 
 	let map: maplibregl.Map | undefined = $state.raw();
-	let trailData: any = $state(null);
+	let trailData: GeoJSON.GeoJSON | null = $state(null);
 
 	onMount(async () => {
 		const response = await fetch('/geojson/ita.geojson');
@@ -56,9 +55,7 @@
 				encoding="terrarium"
 				tileSize={512}
 				maxzoom={12}
-			>
-				<Terrain exaggeration={1.2} />
-			</RasterDEMTileSource>
+			/>
 
 			{#if trailData}
 				<GeoJSONSource id="trail-source" data={trailData}>
