@@ -35,7 +35,7 @@ const getSpotList = async (): Promise<Spot[]> => {
 	return data.contents;
 };
 
-const createSpot = async (spot: Spot) => {
+const createSpot = async (spot: Omit<Spot, 'id'>) => {
 	return await client.create({
 		endpoint: 'spot',
 		content: spot

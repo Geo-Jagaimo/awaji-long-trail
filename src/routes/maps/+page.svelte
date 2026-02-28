@@ -410,30 +410,37 @@
 						{errorMessage}
 					</div>
 				{/if}
-				<form
-					autocomplete="off"
-					onsubmit={(e) => {
-						e.preventDefault();
-						if (!password) {
-							errorMessage = 'パスワードを入力してください。';
-							return;
-						}
-						errorMessage = '';
-						showPasswordDialog = false;
-						isAdminMode = true;
-					}}
-					class="space-y-3"
-				>
+				<div class="space-y-3">
 					<input
-						type="password"
+						type="text"
 						bind:value={password}
 						placeholder="Password"
-						autocomplete="new-password"
-						class="w-full rounded-lg border px-3 py-2 text-sm"
+						autocomplete="off"
+						class="w-full rounded-lg border px-3 py-2 text-sm [-webkit-text-security:disc]"
+						onkeydown={(e) => {
+							if (e.key === 'Enter') {
+								if (!password) {
+									errorMessage = 'パスワードを入力してください。';
+									return;
+								}
+								errorMessage = '';
+								showPasswordDialog = false;
+								isAdminMode = true;
+							}
+						}}
 					/>
 					<div class="flex gap-3">
 						<button
-							type="submit"
+							type="button"
+							onclick={() => {
+								if (!password) {
+									errorMessage = 'パスワードを入力してください。';
+									return;
+								}
+								errorMessage = '';
+								showPasswordDialog = false;
+								isAdminMode = true;
+							}}
 							class="flex-1 rounded-lg bg-orange-500 py-2 text-sm font-medium text-white hover:bg-orange-600"
 						>
 							ログイン
@@ -450,7 +457,7 @@
 							キャンセル
 						</button>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	{/if}

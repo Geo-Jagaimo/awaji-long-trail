@@ -33,7 +33,12 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ error: '座標が不正です。' }, { status: 400 });
 	}
 
-	const spot = { id: crypto.randomUUID(), title, date, description, image, lat, lng };
-	const result = await createSpot(spot);
-	return json(result, { status: 201 });
+	const spot = { title, date, description, image, lat, lng };
+	try {
+		const result = await createSpot(spot);
+		return json(result, { status: 201 });
+	} catch (e) {
+		console.error('createSpot error:', e);
+		return json({ error: 'スポットの作成に失敗しました。' }, { status: 500 });
+	}
 };
