@@ -45,7 +45,8 @@ export type Response = {
 	contents: Post[];
 };
 
-export type Spot ={
+export type Spot = {
+	id: string;
 	title: string;
 	date: string;
 	image: MicrocmsImage;

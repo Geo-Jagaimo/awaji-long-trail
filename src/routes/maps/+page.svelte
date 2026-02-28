@@ -210,7 +210,7 @@
 				</GeoJSONSource>
 			{/if}
 
-			{#each spots as spot}
+			{#each spots as spot (spot.id)}
 				<Marker lnglat={{ lng: spot.lng, lat: spot.lat }}>
 					<Popup offset={25}>
 						<div class="max-w-[200px]">
@@ -289,7 +289,13 @@
 					</div>
 				{/if}
 
-				<form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }} class="space-y-3">
+				<form
+					onsubmit={(e) => {
+						e.preventDefault();
+						handleSubmit();
+					}}
+					class="space-y-3"
+				>
 					<div>
 						<label for="spot-title" class="block text-sm font-medium">タイトル</label>
 						<input

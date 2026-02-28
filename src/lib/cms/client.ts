@@ -40,6 +40,6 @@ const createSpot = async (spot: Spot) => {
 		endpoint: 'spot',
 		content: spot
 	});
-}
+};
 
 export { getList, getDetail, getNewsList, getSpotList, createSpot };
