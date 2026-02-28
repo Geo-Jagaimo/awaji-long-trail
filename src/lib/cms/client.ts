@@ -1,5 +1,5 @@
 import { createClient, type MicroCMSQueries } from 'microcms-js-sdk';
-import type { Post, Response, News } from './types';
+import type { Post, Response, News, Spot } from './types';
 import { MICROCMS_SERVICE_DOMAIN, MICROCMS_API_KEY } from '$env/static/private';
 
 export const client = createClient({
@@ -27,4 +27,19 @@ const getNewsList = async (): Promise<News[]> => {
 	return data.contents;
 };
 
-export { getList, getDetail, getNewsList };
+const getSpotList = async (): Promise<Spot[]> => {
+	const data = await client.getList<Spot>({
+		endpoint: 'spot'
+	});
+
+	return data.contents;
+};
+
+const createSpot = async (spot: Spot) => {
+	return await client.create({
+		endpoint: 'spot',
+		content: spot
+	});
+}
+
+export { getList, getDetail, getNewsList, getSpotList, createSpot };
