@@ -327,11 +327,11 @@
 	</button>
 </div>
 
-<div class="relative flex w-full" style="height: calc(100vh - 5rem);">
-	<div class="ml-auto h-full w-full px-2 py-2 lg:px-3 lg:py-3">
+<div class="relative flex w-full" style="height: calc(100dvh - 5rem);">
+	<div class="ml-auto h-full w-full lg:px-3 lg:py-3">
 		<MapLibre
 			bind:map
-			class="h-full min-h-[300px] rounded-xl"
+			class="h-full min-h-[300px] lg:rounded-xl"
 			style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
 			zoom={13}
 			minZoom={3}
@@ -408,7 +408,7 @@
 							<div class="spot-marker-arrow"></div>
 						</div>
 					{/snippet}
-					<Popup offset={[0, -70]}>
+					<Popup offset={[0, -56]}>
 						<div class="spot-popup">
 							{#if spot.image?.url}
 								<img src={spot.image.url} alt={spot.title} class="spot-popup-image" />
@@ -431,8 +431,8 @@
 
 	<!-- Dialog: enter password -->
 	{#if showPasswordDialog}
-		<div class="absolute inset-0 z-20 flex items-center justify-center bg-black/30">
-			<div class="mx-4 w-full max-w-xs rounded-xl bg-white p-6 shadow-xl">
+		<div class="absolute inset-0 z-20 flex items-center justify-center bg-black/30 p-4">
+			<div class="w-full max-w-xs rounded-xl bg-white p-5 shadow-xl sm:p-6">
 				<h2 class="mb-4 text-lg font-bold">Authentication</h2>
 				{#if errorMessage}
 					<div class="mb-3 rounded bg-red-100 px-3 py-2 text-sm text-red-700">
@@ -445,7 +445,7 @@
 						bind:value={password}
 						placeholder="Password"
 						autocomplete="off"
-						class="w-full rounded-lg border px-3 py-2 text-sm [-webkit-text-security:disc]"
+						class="w-full rounded-lg border px-3 py-2.5 text-base [-webkit-text-security:disc]"
 						onkeydown={(e) => {
 							if (e.key === 'Enter') {
 								if (!password) {
@@ -470,7 +470,7 @@
 								showPasswordDialog = false;
 								isAdminMode = true;
 							}}
-							class="flex-1 rounded-lg bg-orange-500 py-2 text-sm font-medium text-white hover:bg-orange-600"
+							class="flex-1 rounded-lg bg-orange-500 py-2.5 text-sm font-medium text-white hover:bg-orange-600 active:bg-orange-700"
 						>
 							ログイン
 						</button>
@@ -481,7 +481,7 @@
 								password = '';
 								errorMessage = '';
 							}}
-							class="flex-1 rounded-lg border py-2 text-sm font-medium hover:bg-gray-50"
+							class="flex-1 rounded-lg border py-2.5 text-sm font-medium hover:bg-gray-50 active:bg-gray-100"
 						>
 							キャンセル
 						</button>
@@ -493,24 +493,26 @@
 
 	<!-- upload mode toolbar -->
 	{#if isAdminMode}
-		<div class="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
+		<div
+			class="pointer-events-none absolute bottom-[env(safe-area-inset-bottom,8px)] left-1/2 z-10 -translate-x-1/2 pb-2 sm:bottom-8"
+		>
 			<div
-				class="pointer-events-auto flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-lg"
+				class="pointer-events-auto flex items-center gap-2 rounded-xl bg-white px-3 py-2.5 shadow-lg sm:gap-3 sm:px-4 sm:py-3"
 			>
 				<button
 					onclick={useCurrentLocation}
-					class="rounded-lg bg-blue-500 px-3 py-2 text-sm text-white hover:bg-blue-600"
+					class="rounded-lg bg-blue-500 px-3 py-2.5 text-sm text-white hover:bg-blue-600 active:bg-blue-700"
 				>
 					現在地で追加
 				</button>
-				<span class="text-xs text-gray-500">または地図をタップ</span>
+				<span class="hidden text-xs text-gray-500 sm:inline">または地図をタップ</span>
 				<button
 					onclick={() => {
 						isAdminMode = false;
 						resetForm();
 						password = '';
 					}}
-					class="rounded-lg bg-gray-500 px-3 py-2 text-sm text-white hover:bg-gray-600"
+					class="rounded-lg bg-gray-500 px-3 py-2.5 text-sm text-white hover:bg-gray-600 active:bg-gray-700"
 				>
 					終了
 				</button>
@@ -520,8 +522,10 @@
 
 	<!-- upload mode form -->
 	{#if showForm}
-		<div class="absolute inset-0 z-20 flex items-center justify-center bg-black/30">
-			<div class="mx-4 w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+		<div class="absolute inset-0 z-20 flex items-end justify-center bg-black/30 sm:items-center">
+			<div
+				class="max-h-[85dvh] w-full overflow-y-auto rounded-t-xl bg-white p-5 shadow-xl sm:mx-4 sm:max-w-md sm:rounded-xl sm:p-6"
+			>
 				<h2 class="mb-4 text-lg font-bold">スポットを追加</h2>
 
 				{#if errorMessage}
@@ -544,7 +548,7 @@
 							type="text"
 							bind:value={formTitle}
 							required
-							class="mt-1 w-full rounded-lg border px-3 py-2 text-sm"
+							class="mt-1 w-full rounded-lg border px-3 py-2.5 text-base"
 						/>
 					</div>
 
@@ -555,7 +559,7 @@
 							type="date"
 							bind:value={formDate}
 							required
-							class="mt-1 w-full rounded-lg border px-3 py-2 text-sm"
+							class="mt-1 w-full rounded-lg border px-3 py-2.5 text-base"
 						/>
 					</div>
 
@@ -566,7 +570,7 @@
 							type="file"
 							accept="image/*"
 							onchange={handleFileChange}
-							class="mt-1 w-full text-sm"
+							class="mt-1 w-full text-base"
 						/>
 					</div>
 
@@ -577,7 +581,7 @@
 							bind:value={formDescription}
 							required
 							rows={3}
-							class="mt-1 w-full rounded-lg border px-3 py-2 text-sm"
+							class="mt-1 w-full rounded-lg border px-3 py-2.5 text-base"
 						></textarea>
 					</div>
 
@@ -590,7 +594,7 @@
 								step="0.000001"
 								bind:value={formLat}
 								required
-								class="mt-1 w-full rounded-lg border px-3 py-2 text-sm"
+								class="mt-1 w-full rounded-lg border px-3 py-2.5 text-base"
 							/>
 						</div>
 						<div>
@@ -601,7 +605,7 @@
 								step="0.000001"
 								bind:value={formLng}
 								required
-								class="mt-1 w-full rounded-lg border px-3 py-2 text-sm"
+								class="mt-1 w-full rounded-lg border px-3 py-2.5 text-base"
 							/>
 						</div>
 					</div>
@@ -610,14 +614,14 @@
 						<button
 							type="submit"
 							disabled={submitting}
-							class="flex-1 rounded-lg bg-orange-500 py-2 text-sm font-medium text-white hover:bg-orange-600 disabled:opacity-50"
+							class="flex-1 rounded-lg bg-orange-500 py-3 text-sm font-medium text-white hover:bg-orange-600 active:bg-orange-700 disabled:opacity-50"
 						>
 							{submitting ? '送信中...' : '追加する'}
 						</button>
 						<button
 							type="button"
 							onclick={resetForm}
-							class="flex-1 rounded-lg border py-2 text-sm font-medium hover:bg-gray-50"
+							class="flex-1 rounded-lg border py-3 text-sm font-medium hover:bg-gray-50 active:bg-gray-100"
 						>
 							キャンセル
 						</button>
@@ -643,11 +647,11 @@
 	}
 
 	.spot-marker-pin {
-		width: 64px;
-		height: 64px;
+		width: 48px;
+		height: 48px;
 		border-radius: 50%;
 		overflow: hidden;
-		border: 4px solid #ff6b35;
+		border: 3px solid #ff6b35;
 		background: #ff6b35;
 	}
 
@@ -668,10 +672,24 @@
 	.spot-marker-arrow {
 		width: 0;
 		height: 0;
-		border-left: 10px solid transparent;
-		border-right: 10px solid transparent;
-		border-top: 12px solid #ff6b35;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+		border-top: 10px solid #ff6b35;
 		margin-top: -2px;
+	}
+
+	@media (min-width: 640px) {
+		.spot-marker-pin {
+			width: 64px;
+			height: 64px;
+			border: 4px solid #ff6b35;
+		}
+
+		.spot-marker-arrow {
+			border-left-width: 10px;
+			border-right-width: 10px;
+			border-top-width: 12px;
+		}
 	}
 
 	/* Popup container */
@@ -681,18 +699,18 @@
 
 	:global(.maplibregl-popup-content) {
 		position: relative;
-		border-radius: 16px;
+		border-radius: 12px;
 		padding: 0;
 		overflow: visible;
 		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-		width: 300px;
+		width: min(260px, calc(100vw - 48px));
 		text-align: left;
 	}
 
 	:global(.maplibregl-popup-close-button) {
 		position: absolute;
-		top: -12px;
-		right: -12px;
+		top: -10px;
+		right: -10px;
 		font-size: 14px;
 		width: 28px;
 		height: 28px;
@@ -716,36 +734,75 @@
 
 	.spot-popup {
 		overflow: hidden;
-		border-radius: 16px;
+		border-radius: 12px;
 	}
 
 	.spot-popup-image {
 		width: 100%;
-		height: 180px;
+		height: 140px;
 		object-fit: cover;
 		display: block;
 	}
 
 	.spot-popup-body {
-		padding: 14px 16px 16px;
+		padding: 10px 12px 12px;
 	}
 
 	.spot-popup-title {
-		font-size: 18px;
+		font-size: 15px;
 		font-weight: 700;
 		margin: 0;
 	}
 
 	.spot-popup-date {
-		font-size: 13px;
+		font-size: 12px;
 		color: #999;
-		margin: 6px 0;
+		margin: 4px 0;
 	}
 
 	.spot-popup-desc {
-		font-size: 15px;
-		line-height: 1.6;
-		margin: 6px 0 0;
+		font-size: 13px;
+		line-height: 1.5;
+		margin: 4px 0 0;
 		color: #333;
+	}
+
+	@media (min-width: 640px) {
+		:global(.maplibregl-popup-content) {
+			width: 300px;
+			border-radius: 16px;
+		}
+
+		:global(.maplibregl-popup-close-button) {
+			top: -12px;
+			right: -12px;
+		}
+
+		.spot-popup {
+			border-radius: 16px;
+		}
+
+		.spot-popup-image {
+			height: 180px;
+		}
+
+		.spot-popup-body {
+			padding: 14px 16px 16px;
+		}
+
+		.spot-popup-title {
+			font-size: 18px;
+		}
+
+		.spot-popup-date {
+			font-size: 13px;
+			margin: 6px 0;
+		}
+
+		.spot-popup-desc {
+			font-size: 15px;
+			line-height: 1.6;
+			margin: 6px 0 0;
+		}
 	}
 </style>
