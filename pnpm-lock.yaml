@@ -27,9 +27,6 @@ importers:
       '@playwright/test':
         specifier: ^1.49.1
         version: 1.56.1
-      '@sveltejs/adapter-auto':
-        specifier: ^6.0.0
-        version: 6.1.1(@sveltejs/kit@2.49.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)))(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)))
       '@sveltejs/kit':
         specifier: ^2.20.7
         version: 2.49.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)))(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))
@@ -435,9 +432,6 @@ packages:
   '@mapbox/point-geometry@1.1.0':
     resolution: {integrity: sha512-YGcBz1cg4ATXDCM/71L9xveh4dynfGmcLDqufR+nQQy3fKwsAZsWd/x4621/6uJaeB9mwOHE6hPeDgXz9uViUQ==}
 
-  '@mapbox/tiny-sdf@2.0.6':
-    resolution: {integrity: sha512-qMqa27TLw+ZQz5Jk+RcwZGH7BQf5G/TrutJhspsca/3SHwmgKQ1iq+d3Jxz5oysPVYTGP6aXxCo5Lk9Er6YBAA==}
-
   '@mapbox/tiny-sdf@2.0.7':
     resolution: {integrity: sha512-25gQLQMcpivjOSA40g3gO6qgiFPDpWRoMfd+G/GoppPIeP6JDaMMkMrEJnMZhKyyS6iKwVt5YKu02vCUyJM3Ug==}
 
@@ -612,11 +606,6 @@ packages:
     resolution: {integrity: sha512-IwQk4yfwLdibDlrXVE04jTZYlLnwsTT2PIOQQGNLWfjavGifnk1JD1LcZjZaBTRcxZu2FfPfNLOE04DSu9lqtQ==}
     peerDependencies:
       acorn: ^8.9.0
-
-  '@sveltejs/adapter-auto@6.1.1':
-    resolution: {integrity: sha512-cBNt4jgH4KuaNO5gRSB2CZKkGtz+OCZ8lPjRQGjhvVUD4akotnj2weUia6imLl2v07K3IgsQRyM36909miSwoQ==}
-    peerDependencies:
-      '@sveltejs/kit': ^2.0.0
 
   '@sveltejs/kit@2.49.0':
     resolution: {integrity: sha512-oH8tXw7EZnie8FdOWYrF7Yn4IKrqTFHhXvl8YxXxbKwTMcD/5NNCryUSEXRk2ZR4ojnub0P8rNrsVGHXWqIDtA==}
@@ -1327,9 +1316,6 @@ packages:
 
   getpass@0.1.7:
     resolution: {integrity: sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==}
-
-  gl-matrix@3.4.3:
-    resolution: {integrity: sha512-wcCp8vu8FT22BnvKVPjXa/ICBWRq/zjFfdofZy1WSpQZpphblv12/bOQLBC1rMM7SGOFS9ltVmKOHil5+Ml7gA==}
 
   gl-matrix@3.4.4:
     resolution: {integrity: sha512-latSnyDNt/8zYUB6VIJ6PCh2jBjJX6gnDsoCZ7LyW7GkqrD51EWwa9qCoGixj8YqBtETQK/xY7OmpTF8xz1DdQ==}
@@ -2347,7 +2333,7 @@ snapshots:
       '@probe.gl/log': 4.1.0
       '@probe.gl/stats': 4.1.0
       '@types/offscreencanvas': 2019.7.3
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       mjolnir.js: 3.0.0
 
   '@deck.gl/layers@9.1.11(@deck.gl/core@9.1.11)(@loaders.gl/core@4.3.3)(@luma.gl/core@9.1.9)(@luma.gl/engine@9.1.9(@luma.gl/core@9.1.9)(@luma.gl/shadertools@9.1.9(@luma.gl/core@9.1.9)))':
@@ -2359,7 +2345,7 @@ snapshots:
       '@luma.gl/core': 9.1.9
       '@luma.gl/engine': 9.1.9(@luma.gl/core@9.1.9)(@luma.gl/shadertools@9.1.9(@luma.gl/core@9.1.9))
       '@luma.gl/shadertools': 9.1.9(@luma.gl/core@9.1.9)
-      '@mapbox/tiny-sdf': 2.0.6
+      '@mapbox/tiny-sdf': 2.0.7
       '@math.gl/core': 4.1.0
       '@math.gl/polygon': 4.1.0
       '@math.gl/web-mercator': 4.1.0
@@ -2598,8 +2584,6 @@ snapshots:
 
   '@mapbox/point-geometry@1.1.0': {}
 
-  '@mapbox/tiny-sdf@2.0.6': {}
-
   '@mapbox/tiny-sdf@2.0.7': {}
 
   '@mapbox/unitbezier@0.0.1': {}
@@ -2743,10 +2727,6 @@ snapshots:
   '@sveltejs/acorn-typescript@1.0.5(acorn@8.15.0)':
     dependencies:
       acorn: 8.15.0
-
-  '@sveltejs/adapter-auto@6.1.1(@sveltejs/kit@2.49.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)))(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)))':
-    dependencies:
-      '@sveltejs/kit': 2.49.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)))(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))
 
   '@sveltejs/kit@2.49.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)))(svelte@5.28.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))':
     dependencies:
@@ -3502,8 +3482,6 @@ snapshots:
   getpass@0.1.7:
     dependencies:
       assert-plus: 1.0.0
-
-  gl-matrix@3.4.3: {}
 
   gl-matrix@3.4.4: {}
 
