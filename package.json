@@ -48,6 +48,7 @@
 	},
 	"dependencies": {
 		"dompurify": "^3.2.5",
+		"maplibre-contour": "^0.1.0",
 		"maplibre-gl": "^5.15.0",
 		"microcms-js-sdk": "^3.2.0"
 	}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import maplibregl from 'maplibre-gl';
+	import mlcontour from 'maplibre-contour';
 	import { onMount } from 'svelte';
 	import type { Spot } from '$lib/cms/types';
 
@@ -22,6 +23,7 @@
 	let map: maplibregl.Map | undefined = $state.raw();
 	let trailData: GeoJSON.GeoJSON | null = $state(null);
 	let spots: Spot[] = $state([]);
+	let demSource: InstanceType<typeof mlcontour.DemSource>;
 
 	// upload mode
 	let isAdminMode = $state(false);
@@ -41,6 +43,102 @@
 
 	// selected marker
 	let selectedLngLat: { lng: number; lat: number } | null = $state(null);
+
+	// contour
+	let contourVisible = $state(false);
+
+	function createContourControl(): maplibregl.IControl {
+		let container: HTMLDivElement;
+		let button: HTMLButtonElement;
+		return {
+			onAdd() {
+				container = document.createElement('div');
+				container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
+				button = document.createElement('button');
+				button.type = 'button';
+				button.ariaLabel = 'toggle contour';
+				button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;padding:5px;box-sizing:border-box;"><path d="M4 18l4-4c2-2 4-1 6 0s4 2 6 0l0-2"/><path d="M4 14l4-4c2-2 4-1 6 0s4 2 6 0l0-2"/><path d="M4 10l4-4c2-2 4-1 6 0s4 2 6 0"/></svg>`;
+				button.addEventListener('click', () => {
+					contourVisible = !contourVisible;
+					toggleContourLayers();
+					button.style.backgroundColor = contourVisible ? '#e0e0e0' : '';
+				});
+				container.appendChild(button);
+				return container;
+			},
+			onRemove() {
+				container.remove();
+			}
+		};
+	}
+
+	function setupContour() {
+		if (!map) return;
+
+		map.addSource('contourSource', {
+			type: 'vector',
+			tiles: [
+				demSource.contourProtocolUrl({
+					thresholds: {
+						12: [100, 500],
+						14: [20, 100]
+					},
+					elevationKey: 'ele',
+					levelKey: 'level',
+					contourLayer: 'contours',
+					buffer: 1,
+					overzoom: 2
+				})
+			],
+			maxzoom: 17
+		});
+
+		const firstSymbolLayer = map.getStyle().layers.find((l) => l.type === 'symbol');
+
+		map.addLayer(
+			{
+				id: 'contour-lines',
+				type: 'line',
+				source: 'contourSource',
+				'source-layer': 'contours',
+				paint: {
+					'line-color': 'rgb(180, 120, 40)',
+					'line-width': ['match', ['get', 'level'], 1, 2.5, 1.2]
+				},
+				layout: {
+					visibility: 'none'
+				}
+			},
+			firstSymbolLayer?.id
+		);
+
+		map.addLayer({
+			id: 'contour-labels',
+			type: 'symbol',
+			source: 'contourSource',
+			'source-layer': 'contours',
+			filter: ['==', ['get', 'level'], 1],
+			paint: {
+				'text-color': 'rgb(172, 120, 48)',
+				'text-halo-color': 'white',
+				'text-halo-width': 2
+			},
+			layout: {
+				visibility: 'none',
+				'symbol-placement': 'line',
+				'text-size': 12,
+				'text-field': ['concat', ['number-format', ['get', 'ele'], {}], 'm'],
+				'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular']
+			}
+		});
+	}
+
+	function toggleContourLayers() {
+		if (!map) return;
+		const visibility = contourVisible ? 'visible' : 'none';
+		map.setLayoutProperty('contour-lines', 'visibility', visibility);
+		map.setLayoutProperty('contour-labels', 'visibility', visibility);
+	}
 
 	function createSpotControl(): maplibregl.IControl {
 		let container: HTMLDivElement;
@@ -65,6 +163,15 @@
 	}
 
 	onMount(async () => {
+		// Register contour protocol before map loads tiles
+		demSource = new mlcontour.DemSource({
+			url: 'https://tiles.mapterhorn.com/{z}/{x}/{y}.webp',
+			encoding: 'terrarium',
+			maxzoom: 12,
+			worker: true
+		});
+		demSource.setupMaplibre(maplibregl);
+
 		const [trailRes, spotsRes] = await Promise.all([
 			fetch('/geojson/ita.geojson'),
 			fetch('/api/spots')
@@ -73,7 +180,18 @@
 		spots = await spotsRes.json();
 
 		if (map) {
+			map.addControl(createContourControl(), 'top-right');
 			map.addControl(createSpotControl(), 'top-right');
+
+			const addContourLayers = () => {
+				setupContour();
+			};
+
+			if (map.isStyleLoaded()) {
+				addContourLayers();
+			} else {
+				map.once('load', addContourLayers);
+			}
 		}
 	});
 

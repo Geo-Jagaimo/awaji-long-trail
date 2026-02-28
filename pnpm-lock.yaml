@@ -11,6 +11,9 @@ importers:
       dompurify:
         specifier: ^3.2.5
         version: 3.2.5
+      maplibre-contour:
+        specifier: ^0.1.0
+        version: 0.1.0
       maplibre-gl:
         specifier: ^5.15.0
         version: 5.15.0
