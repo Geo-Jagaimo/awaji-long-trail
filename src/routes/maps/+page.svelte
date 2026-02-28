@@ -285,7 +285,7 @@
 		</div>
 	{/if}
 
-	<!-- 管理者モード案内 -->
+	<!-- upload mode guide -->
 	{#if isAdminMode && !showForm}
 		<div class="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
 			<div class="rounded-lg bg-black/70 px-4 py-2 text-sm text-white">
@@ -294,7 +294,7 @@
 		</div>
 	{/if}
 
-	<!-- スポット追加フォーム -->
+	<!-- upload mode form -->
 	{#if showForm}
 		<div class="absolute inset-0 z-20 flex items-center justify-center bg-black/30">
 			<div class="mx-4 w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
