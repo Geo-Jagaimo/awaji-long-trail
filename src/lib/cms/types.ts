@@ -44,3 +44,12 @@ export type Response = {
 	limit: number;
 	contents: Post[];
 };
+
+export type Spot ={
+	title: string;
+	date: string;
+	image: MicrocmsImage;
+	description: string;
+	lat: number;
+	lng: number;
+};
