@@ -411,6 +411,7 @@
 					</div>
 				{/if}
 				<form
+					autocomplete="off"
 					onsubmit={(e) => {
 						e.preventDefault();
 						if (!password) {
@@ -427,6 +428,7 @@
 						type="password"
 						bind:value={password}
 						placeholder="Password"
+						autocomplete="new-password"
 						class="w-full rounded-lg border px-3 py-2 text-sm"
 					/>
 					<div class="flex gap-3">
