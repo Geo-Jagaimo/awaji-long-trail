@@ -23,14 +23,14 @@
 	let trailData: GeoJSON.GeoJSON | null = $state(null);
 	let spots: Spot[] = $state([]);
 
-	// 管理者モード
+	// upload mode
 	let isAdminMode = $state(false);
 	let password = $state('');
 	let showForm = $state(false);
 	let submitting = $state(false);
 	let errorMessage = $state('');
 
-	// フォーム
+	// form
 	let formTitle = $state('');
 	let formDate = $state(new Date().toISOString().split('T')[0]);
 	let formDescription = $state('');
@@ -38,7 +38,7 @@
 	let formLng = $state(0);
 	let formFile: File | null = $state(null);
 
-	// 選択中のマーカー位置
+	// selected marker
 	let selectedLngLat: { lng: number; lat: number } | null = $state(null);
 
 	onMount(async () => {
@@ -126,11 +126,9 @@
 				throw new Error(data.error || 'スポットの作成に失敗しました。');
 			}
 
-			// リロードしてスポット一覧を更新
 			const spotsRes = await fetch('/api/spots');
 			spots = await spotsRes.json();
 
-			// フォームリセット
 			resetForm();
 		} catch (e) {
 			errorMessage = e instanceof Error ? e.message : 'エラーが発生しました。';
@@ -231,14 +229,26 @@
 		</MapLibre>
 	</div>
 
-	<!-- 管理者モードトグル -->
+	<!-- upload mode -->
 	<div class="absolute top-4 right-4 z-10">
 		{#if !isAdminMode}
 			<button
 				onclick={() => (isAdminMode = true)}
-				class="rounded-lg bg-white px-3 py-2 text-sm shadow-md hover:bg-gray-50"
+				class="rounded-lg bg-white p-2 shadow-md hover:bg-gray-50"
+				aria-label="add spot"
 			>
-				管理者モード
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 24 24"
+					fill="currentColor"
+					class="h-5 w-5 text-gray-700"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+						clip-rule="evenodd"
+					/>
+				</svg>
 			</button>
 		{:else}
 			<div class="flex gap-2">
