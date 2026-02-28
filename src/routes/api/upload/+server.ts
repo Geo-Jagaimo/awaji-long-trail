@@ -4,7 +4,7 @@ import { timingSafeEqual } from '$lib/auth';
 import type { RequestHandler } from './$types';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB (microCMS limit)
 
 export const POST: RequestHandler = async ({ request }) => {
 	const formData = await request.formData();

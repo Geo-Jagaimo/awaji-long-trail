@@ -354,8 +354,24 @@
 			{/if}
 
 			{#each spots as spot (spot.id)}
-				<Marker lnglat={{ lng: spot.lng, lat: spot.lat }}>
-					<Popup offset={25}>
+				<Marker lnglat={{ lng: spot.lng, lat: spot.lat }} anchor="bottom">
+					{#snippet content()}
+						<div class="spot-marker">
+							<div class="spot-marker-pin">
+								{#if spot.image?.url}
+									<img src={spot.image.url} alt={spot.title} />
+								{:else}
+									<div class="spot-marker-placeholder">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+											<path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+										</svg>
+									</div>
+								{/if}
+							</div>
+							<div class="spot-marker-arrow"></div>
+						</div>
+					{/snippet}
+					<Popup offset={[0, -50]}>
 						<div class="max-w-[200px]">
 							{#if spot.image?.url}
 								<img src={spot.image.url} alt={spot.title} class="mb-1 w-full rounded" />
@@ -563,3 +579,45 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.spot-marker {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		cursor: pointer;
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+	}
+
+	.spot-marker-pin {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		overflow: hidden;
+		border: 3px solid white;
+		background: #ff6b35;
+	}
+
+	.spot-marker-pin img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.spot-marker-placeholder {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.spot-marker-arrow {
+		width: 0;
+		height: 0;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+		border-top: 10px solid white;
+		margin-top: -2px;
+	}
+</style>
