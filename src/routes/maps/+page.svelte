@@ -25,6 +25,7 @@
 
 	// upload mode
 	let isAdminMode = $state(false);
+	let showPasswordDialog = $state(false);
 	let password = $state('');
 	let showForm = $state(false);
 	let submitting = $state(false);
@@ -52,7 +53,7 @@
 				button.ariaLabel = 'add spot';
 				button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:100%;height:100%;padding:5px;box-sizing:border-box;"><path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>`;
 				button.addEventListener('click', () => {
-					isAdminMode = true;
+					showPasswordDialog = true;
 				});
 				container.appendChild(button);
 				return container;
@@ -255,41 +256,82 @@
 		</MapLibre>
 	</div>
 
+	<!-- Dialog: enter password -->
+	{#if showPasswordDialog}
+		<div class="absolute inset-0 z-20 flex items-center justify-center bg-black/30">
+			<div class="mx-4 w-full max-w-xs rounded-xl bg-white p-6 shadow-xl">
+				<h2 class="mb-4 text-lg font-bold">Authentication</h2>
+				{#if errorMessage}
+					<div class="mb-3 rounded bg-red-100 px-3 py-2 text-sm text-red-700">
+						{errorMessage}
+					</div>
+				{/if}
+				<form
+					onsubmit={(e) => {
+						e.preventDefault();
+						if (!password) {
+							errorMessage = 'パスワードを入力してください。';
+							return;
+						}
+						errorMessage = '';
+						showPasswordDialog = false;
+						isAdminMode = true;
+					}}
+					class="space-y-3"
+				>
+					<input
+						type="password"
+						bind:value={password}
+						placeholder="Password"
+						class="w-full rounded-lg border px-3 py-2 text-sm"
+					/>
+					<div class="flex gap-3">
+						<button
+							type="submit"
+							class="flex-1 rounded-lg bg-orange-500 py-2 text-sm font-medium text-white hover:bg-orange-600"
+						>
+							ログイン
+						</button>
+						<button
+							type="button"
+							onclick={() => {
+								showPasswordDialog = false;
+								password = '';
+								errorMessage = '';
+							}}
+							class="flex-1 rounded-lg border py-2 text-sm font-medium hover:bg-gray-50"
+						>
+							キャンセル
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	{/if}
+
+	<!-- upload mode toolbar -->
 	{#if isAdminMode}
-		<!-- upload mode -->
-		<div class="absolute top-4 right-4 z-10">
-			<div class="flex gap-2">
-				<input
-					type="password"
-					bind:value={password}
-					placeholder="パスワード"
-					class="rounded-lg border px-3 py-2 text-sm shadow-md"
-				/>
+		<div class="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
+			<div
+				class="pointer-events-auto flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-lg"
+			>
 				<button
 					onclick={useCurrentLocation}
-					class="rounded-lg bg-blue-500 px-3 py-2 text-sm text-white shadow-md hover:bg-blue-600"
+					class="rounded-lg bg-blue-500 px-3 py-2 text-sm text-white hover:bg-blue-600"
 				>
 					現在地で追加
 				</button>
+				<span class="text-xs text-gray-500">または地図をタップ</span>
 				<button
 					onclick={() => {
 						isAdminMode = false;
 						resetForm();
 						password = '';
 					}}
-					class="rounded-lg bg-gray-500 px-3 py-2 text-sm text-white shadow-md hover:bg-gray-600"
+					class="rounded-lg bg-gray-500 px-3 py-2 text-sm text-white hover:bg-gray-600"
 				>
-					閉じる
+					終了
 				</button>
-			</div>
-		</div>
-	{/if}
-
-	<!-- upload mode guide -->
-	{#if isAdminMode && !showForm}
-		<div class="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
-			<div class="rounded-lg bg-black/70 px-4 py-2 text-sm text-white">
-				地図をタップしてスポットを追加、または「現在地で追加」を押してください
 			</div>
 		</div>
 	{/if}
