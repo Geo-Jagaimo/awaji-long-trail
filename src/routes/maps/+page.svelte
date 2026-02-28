@@ -24,6 +24,7 @@
 	let trailData: GeoJSON.GeoJSON | null = $state(null);
 	let spots: Spot[] = $state([]);
 	let demSource: InstanceType<typeof mlcontour.DemSource>;
+	let sharedDemUrl = $state('');
 
 	// upload mode
 	let isAdminMode = $state(false);
@@ -83,7 +84,7 @@
 					overzoom: 2
 				})
 			],
-			maxzoom: 17
+			maxzoom: 15
 		});
 
 		const firstSymbolLayer = map.getStyle().layers.find((l) => l.type === 'symbol');
@@ -155,6 +156,7 @@
 			worker: true
 		});
 		demSource.setupMaplibre(maplibregl);
+		sharedDemUrl = demSource.sharedDemProtocolUrl;
 
 		const [trailRes, spotsRes] = await Promise.all([
 			fetch('/geojson/ita.geojson'),
@@ -342,22 +344,24 @@
 			<NavigationControl />
 			<ScaleControl />
 			<GlobeControl />
-			<RasterDEMTileSource
-				tiles={['https://tiles.mapterhorn.com/{z}/{x}/{y}.webp']}
-				encoding="terrarium"
-				tileSize={512}
-				maxzoom={12}
-				attribution="<a href='https://mapterhorn.com/attribution/' target='_blank'>Mapterhorn</a>"
-			>
-				<TerrainControl position="top-right" />
-				<HillshadeLayer
-					paint={{
-						'hillshade-exaggeration': 0.5,
-						'hillshade-illumination-anchor': 'map',
-						'hillshade-shadow-color': '#3080b0'
-					}}
-				/>
-			</RasterDEMTileSource>
+			{#if sharedDemUrl}
+				<RasterDEMTileSource
+					tiles={[sharedDemUrl]}
+					encoding="terrarium"
+					tileSize={512}
+					maxzoom={12}
+					attribution="<a href='https://mapterhorn.com/attribution/' target='_blank'>Mapterhorn</a>"
+				>
+					<TerrainControl position="top-right" />
+					<HillshadeLayer
+						paint={{
+							'hillshade-exaggeration': 0.5,
+							'hillshade-illumination-anchor': 'map',
+							'hillshade-shadow-color': '#3080b0'
+						}}
+					/>
+				</RasterDEMTileSource>
+			{/if}
 
 			{#if trailData}
 				<GeoJSONSource id="trail-source" data={trailData}>
