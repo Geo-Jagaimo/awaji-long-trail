@@ -9,8 +9,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	try {
 		const post: Post = await getDetail(id);
 		return { post };
-	} catch (err) {
-		console.error(err);
+	} catch {
 		throw error(404, 'Post not found');
 	}
 };

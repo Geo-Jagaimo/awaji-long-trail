@@ -47,29 +47,22 @@
 	// contour
 	let contourVisible = $state(false);
 
+	let contourControlContainer: HTMLDivElement;
+
 	function createContourControl(): maplibregl.IControl {
-		let container: HTMLDivElement;
-		let button: HTMLButtonElement;
 		return {
 			onAdd() {
-				container = document.createElement('div');
-				container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
-				button = document.createElement('button');
-				button.type = 'button';
-				button.ariaLabel = 'toggle contour';
-				button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;padding:5px;box-sizing:border-box;"><path d="M4 18l4-4c2-2 4-1 6 0s4 2 6 0l0-2"/><path d="M4 14l4-4c2-2 4-1 6 0s4 2 6 0l0-2"/><path d="M4 10l4-4c2-2 4-1 6 0s4 2 6 0"/></svg>`;
-				button.addEventListener('click', () => {
-					contourVisible = !contourVisible;
-					toggleContourLayers();
-					button.style.backgroundColor = contourVisible ? '#e0e0e0' : '';
-				});
-				container.appendChild(button);
-				return container;
+				return contourControlContainer;
 			},
 			onRemove() {
-				container.remove();
+				// managed by Svelte
 			}
 		};
+	}
+
+	function toggleContour() {
+		contourVisible = !contourVisible;
+		toggleContourLayers();
 	}
 
 	function setupContour() {
@@ -140,24 +133,15 @@
 		map.setLayoutProperty('contour-labels', 'visibility', visibility);
 	}
 
+	let spotControlContainer: HTMLDivElement;
+
 	function createSpotControl(): maplibregl.IControl {
-		let container: HTMLDivElement;
 		return {
 			onAdd() {
-				container = document.createElement('div');
-				container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
-				const button = document.createElement('button');
-				button.type = 'button';
-				button.ariaLabel = 'add spot';
-				button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:100%;height:100%;padding:5px;box-sizing:border-box;"><path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>`;
-				button.addEventListener('click', () => {
-					showPasswordDialog = true;
-				});
-				container.appendChild(button);
-				return container;
+				return spotControlContainer;
 			},
 			onRemove() {
-				container.remove();
+				// managed by Svelte
 			}
 		};
 	}
@@ -183,14 +167,10 @@
 			map.addControl(createContourControl(), 'top-right');
 			map.addControl(createSpotControl(), 'top-right');
 
-			const addContourLayers = () => {
-				setupContour();
-			};
-
 			if (map.isStyleLoaded()) {
-				addContourLayers();
+				setupContour();
 			} else {
-				map.once('load', addContourLayers);
+				map.once('load', setupContour);
 			}
 		}
 	});
@@ -206,7 +186,8 @@
 
 	function useCurrentLocation() {
 		if (!navigator.geolocation) {
-			errorMessage = 'このブラウザでは位置情報を取得できません。';
+			// 位置情報が使えない場合は手動入力フォームを開く
+			showForm = true;
 			return;
 		}
 		navigator.geolocation.getCurrentPosition(
@@ -217,7 +198,8 @@
 				showForm = true;
 			},
 			() => {
-				errorMessage = '位置情報の取得に失敗しました。';
+				// 位置情報の取得に失敗しても手動入力フォームを開く
+				showForm = true;
 			}
 		);
 	}
@@ -248,7 +230,7 @@
 			if (formFile) {
 				const uploaded = await uploadImage();
 				if (uploaded) {
-					image = { url: uploaded.url };
+					image = uploaded.url;
 				}
 			}
 
@@ -301,6 +283,47 @@
 		rel="stylesheet"
 	/>
 </svelte:head>
+
+<!-- MapLibre custom controls (bound to Svelte for reactivity) -->
+<div bind:this={contourControlContainer} class="maplibregl-ctrl maplibregl-ctrl-group">
+	<button
+		type="button"
+		aria-label="toggle contour"
+		style:background-color={contourVisible ? '#e0e0e0' : ''}
+		onclick={toggleContour}
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			style="width:100%;height:100%;padding:5px;box-sizing:border-box;"
+		>
+			<path d="M4 18l4-4c2-2 4-1 6 0s4 2 6 0l0-2" />
+			<path d="M4 14l4-4c2-2 4-1 6 0s4 2 6 0l0-2" />
+			<path d="M4 10l4-4c2-2 4-1 6 0s4 2 6 0" />
+		</svg>
+	</button>
+</div>
+<div bind:this={spotControlContainer} class="maplibregl-ctrl maplibregl-ctrl-group">
+	<button type="button" aria-label="add spot" onclick={() => (showPasswordDialog = true)}>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			style="width:100%;height:100%;padding:5px;box-sizing:border-box;"
+		>
+			<path
+				fill-rule="evenodd"
+				d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+				clip-rule="evenodd"
+			/>
+		</svg>
+	</button>
+</div>
 
 <div class="relative flex w-full" style="height: calc(100vh - 5rem);">
 	<div class="ml-auto h-full w-full px-2 py-2 lg:px-3 lg:py-3">
@@ -381,14 +404,16 @@
 							<div class="spot-marker-arrow"></div>
 						</div>
 					{/snippet}
-					<Popup offset={[0, -50]}>
-						<div class="max-w-[200px]">
+					<Popup offset={[0, -70]}>
+						<div class="spot-popup">
 							{#if spot.image?.url}
-								<img src={spot.image.url} alt={spot.title} class="mb-1 w-full rounded" />
+								<img src={spot.image.url} alt={spot.title} class="spot-popup-image" />
 							{/if}
-							<h3 class="text-sm font-bold">{spot.title}</h3>
-							<p class="text-xs text-gray-500">{spot.date}</p>
-							<p class="mt-1 text-xs">{spot.description}</p>
+							<div class="spot-popup-body">
+								<h3 class="spot-popup-title">{spot.title}</h3>
+								<p class="spot-popup-date">{spot.date?.split('T')[0] ?? spot.date}</p>
+								<p class="spot-popup-desc">{spot.description}</p>
+							</div>
 						</div>
 					</Popup>
 				</Marker>
@@ -605,15 +630,20 @@
 		flex-direction: column;
 		align-items: center;
 		cursor: pointer;
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+		filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
+		transition: transform 0.15s ease;
+	}
+
+	.spot-marker:hover {
+		transform: scale(1.1);
 	}
 
 	.spot-marker-pin {
-		width: 48px;
-		height: 48px;
+		width: 64px;
+		height: 64px;
 		border-radius: 50%;
 		overflow: hidden;
-		border: 3px solid white;
+		border: 4px solid #ff6b35;
 		background: #ff6b35;
 	}
 
@@ -634,9 +664,84 @@
 	.spot-marker-arrow {
 		width: 0;
 		height: 0;
-		border-left: 8px solid transparent;
-		border-right: 8px solid transparent;
-		border-top: 10px solid white;
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-top: 12px solid #ff6b35;
 		margin-top: -2px;
+	}
+
+	/* Popup container */
+	:global(.maplibregl-popup) {
+		max-width: none !important;
+	}
+
+	:global(.maplibregl-popup-content) {
+		position: relative;
+		border-radius: 16px;
+		padding: 0;
+		overflow: visible;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+		width: 300px;
+		text-align: left;
+	}
+
+	:global(.maplibregl-popup-close-button) {
+		position: absolute;
+		top: -12px;
+		right: -12px;
+		font-size: 14px;
+		width: 28px;
+		height: 28px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: #e74c3c !important;
+		color: white !important;
+		border: 2px solid white;
+		cursor: pointer;
+		z-index: 10;
+		line-height: 1;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+
+	:global(.maplibregl-popup-close-button:hover) {
+		background: #c0392b !important;
+		color: white !important;
+	}
+
+	.spot-popup {
+		overflow: hidden;
+		border-radius: 16px;
+	}
+
+	.spot-popup-image {
+		width: 100%;
+		height: 180px;
+		object-fit: cover;
+		display: block;
+	}
+
+	.spot-popup-body {
+		padding: 14px 16px 16px;
+	}
+
+	.spot-popup-title {
+		font-size: 18px;
+		font-weight: 700;
+		margin: 0;
+	}
+
+	.spot-popup-date {
+		font-size: 13px;
+		color: #999;
+		margin: 6px 0;
+	}
+
+	.spot-popup-desc {
+		font-size: 15px;
+		line-height: 1.6;
+		margin: 6px 0 0;
+		color: #333;
 	}
 </style>
