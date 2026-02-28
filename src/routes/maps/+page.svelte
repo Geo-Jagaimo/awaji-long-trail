@@ -41,6 +41,28 @@
 	// selected marker
 	let selectedLngLat: { lng: number; lat: number } | null = $state(null);
 
+	function createSpotControl(): maplibregl.IControl {
+		let container: HTMLDivElement;
+		return {
+			onAdd() {
+				container = document.createElement('div');
+				container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
+				const button = document.createElement('button');
+				button.type = 'button';
+				button.ariaLabel = 'add spot';
+				button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:100%;height:100%;padding:5px;box-sizing:border-box;"><path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>`;
+				button.addEventListener('click', () => {
+					isAdminMode = true;
+				});
+				container.appendChild(button);
+				return container;
+			},
+			onRemove() {
+				container.remove();
+			}
+		};
+	}
+
 	onMount(async () => {
 		const [trailRes, spotsRes] = await Promise.all([
 			fetch('/geojson/ita.geojson'),
@@ -48,6 +70,10 @@
 		]);
 		trailData = await trailRes.json();
 		spots = await spotsRes.json();
+
+		if (map) {
+			map.addControl(createSpotControl(), 'top-right');
+		}
 	});
 
 	function handleMapClick(e: maplibregl.MapMouseEvent) {
@@ -229,28 +255,9 @@
 		</MapLibre>
 	</div>
 
-	<!-- upload mode -->
-	<div class="absolute top-4 right-4 z-10">
-		{#if !isAdminMode}
-			<button
-				onclick={() => (isAdminMode = true)}
-				class="rounded-lg bg-white p-2 shadow-md hover:bg-gray-50"
-				aria-label="add spot"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="currentColor"
-					class="h-5 w-5 text-gray-700"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
-						clip-rule="evenodd"
-					/>
-				</svg>
-			</button>
-		{:else}
+	{#if isAdminMode}
+		<!-- upload mode -->
+		<div class="absolute top-4 right-4 z-10">
 			<div class="flex gap-2">
 				<input
 					type="password"
@@ -275,8 +282,8 @@
 					閉じる
 				</button>
 			</div>
-		{/if}
-	</div>
+		</div>
+	{/if}
 
 	<!-- 管理者モード案内 -->
 	{#if isAdminMode && !showForm}
